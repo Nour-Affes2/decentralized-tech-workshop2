@@ -1,7 +1,17 @@
-- name: Upload to IPFS with Pinata
-  run: |
-    curl -X POST "https://api.pinata.cloud/pinning/pinFileToIPFS" \
-      -H "pinata_api_key: ${{ secrets.PINATA_API_KEY }}" \
-      -H "pinata_secret_api_key: ${{ secrets.PINATA_SECRET_API_KEY }}" \
-      -H "Content-Type: multipart/form-data" \
-      -F "file=@./index.html"
+name: Deploy to IPFS with Pinata
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Upload file to Pinata
+        run: |
+          curl -X POST "https://api.pinata.cloud/pinning/pinFileToIPFS" \
+            -H "pinata_api_key: ${{ secrets.PINATA_API_KEY }}" \
+            -H "pinata_secret_api_key: ${{ secrets.PINATA_SECRET_API_KEY }}" \
+            -H "Content-Type: multipart/form-data" \
+            -F "file=@./index.html"
