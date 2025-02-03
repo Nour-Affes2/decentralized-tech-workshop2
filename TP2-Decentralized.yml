@@ -1,6 +1,7 @@
-- name: Upload to Pinata
-  uses: jamesmoriarty/pinata-action@v1
-  with:
-    pinata_api_key: ${{ secrets.PINATA_API_KEY }}
-    pinata_secret_api_key: ${{ secrets.PINATA_SECRET_API_KEY }}
-    pin_directory: './'
+- name: Upload to IPFS with Pinata
+  run: |
+    curl -X POST "https://api.pinata.cloud/pinning/pinFileToIPFS" \
+      -H "pinata_api_key: ${{ secrets.PINATA_API_KEY }}" \
+      -H "pinata_secret_api_key: ${{ secrets.PINATA_SECRET_API_KEY }}" \
+      -H "Content-Type: multipart/form-data" \
+      -F "file=@./index.html"
